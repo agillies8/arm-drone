@@ -1,0 +1,12 @@
+document_id: 58d398ac98a5cfbd812c2b5b
+output_format: urdf
+assembly_name: Drone
+version_id: c5caf0953f401d5a26158f93
+#configuration:Performance 
+#no_dynamics:true
+#add_dummyBaseLink:true
+#merge_stls:all
+#merge_stlsCollisions:true
+simplify_stls: true
+#max_stl_size:45
+draw_frames: true
