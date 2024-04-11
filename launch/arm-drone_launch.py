@@ -4,12 +4,21 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
+
 
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
 
-    urdf_file_name = 'arm-drone.urdf'
+    description_package = LaunchConfiguration("description_package", default = 'arm-drone')
+
+    rviz_config_file = PathJoinSubstitution(
+        [FindPackageShare(description_package), "arm-drone", "rviz/arm-drone-congif.rviz"]
+    )
+
+    urdf_file_name = 'urdf/arm-drone/arm-drone.urdf'
     urdf = os.path.join(
         get_package_share_directory('arm-drone'),
         urdf_file_name)
@@ -34,4 +43,9 @@ def generate_launch_description():
             name='joint_state_publisher_gui',
             output='screen',
             arguments=[urdf]),
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            output='screen',
+            arguments=['-d', rviz_config_file]),
     ])
